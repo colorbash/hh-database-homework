@@ -1,38 +1,38 @@
-CREATE DATABASE testdb;
+п»їCREATE DATABASE testdb;
 \c testdb
 
 CREATE TABLE users(
   ID        SERIAL                PRIMARY KEY, 
-  EMAIL     TEXT                  NOT NULL,--Мыло
-  PSSWD     TEXT                  NOT NULL,--Пароль
-  TIME_REG  TIMESTAMP             NOT NULL,--Веремя регистрации
-  LAST_TIME TIMESTAMP             NOT NULL --Последнее время захода
+  EMAIL     TEXT                  NOT NULL,--РњС‹Р»Рѕ
+  PSSWD     TEXT                  NOT NULL,--РџР°СЂРѕР»СЊ
+  TIME_REG  TIMESTAMP             NOT NULL,--Р’РµСЂРµРјСЏ СЂРµРіРёСЃС‚СЂР°С†РёРё
+  LAST_TIME TIMESTAMP             NOT NULL --РџРѕСЃР»РµРґРЅРµРµ РІСЂРµРјСЏ Р·Р°С…РѕРґР°
 );
 --________________________________________________________________________________________________________________________________________
 
 CREATE TABLE vacancies(
-  ID             SERIAL           PRIMARY KEY,--ИД
-  NAME           TEXT             NOT NULL,--НАЗВАНИЕ
-  POSITION       TEXT             NOT NULL,--Должность
-  DESCRIPTION    TEXT,                     --Описание
-  TIME_REG       TIMESTAMP        NOT NULL,--Время регистрации
-  EXPIRIENCE     INT              NOT NULL,-- Опыт в мес.
-  ACTIVE_DAYS    INT              NOT NULL,--Активно после создания
-  SALARY_MIN     INT              NOT NULL,--Вилка ЗП
+  ID             SERIAL           PRIMARY KEY,--РР”
+  NAME           TEXT             NOT NULL,--РќРђР—Р’РђРќРР•
+  POSITION       TEXT             NOT NULL,--Р”РѕР»Р¶РЅРѕСЃС‚СЊ
+  DESCRIPTION    TEXT,                     --РћРїРёСЃР°РЅРёРµ
+  TIME_REG       TIMESTAMP        NOT NULL,--Р’СЂРµРјСЏ СЂРµРіРёСЃС‚СЂР°С†РёРё
+  EXPIRIENCE     INT              NOT NULL,-- РћРїС‹С‚ РІ РјРµСЃ.
+  ACTIVE_DAYS    INT              NOT NULL,--РђРєС‚РёРІРЅРѕ РїРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ
+  SALARY_MIN     INT              NOT NULL,--Р’РёР»РєР° Р—Рџ
   SALARY_MAX     INT
 );
 --________________________________________________________________________________________________________________________________________
 
-CREATE TABLE summaries (--Резюме
+CREATE TABLE summaries (--Р РµР·СЋРјРµ
   ID         SERIAL               PRIMARY KEY,--ID
-  USR_ID     INT                  REFERENCES users, --ID юзера
-  USR_EMAIL  TEXT                 NOT NULL, --Мыло юзера -- денормализоанная запись чтоб не лазить за ним лишний раз
-  POSITION   TEXT                 NOT NULL, --Должность
-  AGE        INT                  NOT NULL, --Возраст
-  NAME       TEXT                 NOT NULL, --ФИО
-  EXPIRIENCE INT                  NOT NULL, --Опыт в мес.
-  SKILLS     TEXT,                          --Скиллы
-  SALARY_MIN INT                  NOT NULL, --Вилка зп
+  USR_ID     INT                  REFERENCES users, --ID СЋР·РµСЂР°
+  USR_EMAIL  TEXT                 NOT NULL, --РњС‹Р»Рѕ СЋР·РµСЂР° -- РґРµРЅРѕСЂРјР°Р»РёР·РѕР°РЅРЅР°СЏ Р·Р°РїРёСЃСЊ С‡С‚РѕР± РЅРµ Р»Р°Р·РёС‚СЊ Р·Р° РЅРёРј Р»РёС€РЅРёР№ СЂР°Р·
+  POSITION   TEXT                 NOT NULL, --Р”РѕР»Р¶РЅРѕСЃС‚СЊ
+  AGE        INT                  NOT NULL, --Р’РѕР·СЂР°СЃС‚
+  NAME       TEXT                 NOT NULL, --Р¤РРћ
+  EXPIRIENCE INT                  NOT NULL, --РћРїС‹С‚ РІ РјРµСЃ.
+  SKILLS     TEXT,                          --РЎРєРёР»Р»С‹
+  SALARY_MIN INT                  NOT NULL, --Р’РёР»РєР° Р·Рї
   SALARY_MAX INT
 );
 --________________________________________________________________________________________________________________________________________
