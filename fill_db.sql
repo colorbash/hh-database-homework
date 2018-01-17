@@ -25,133 +25,92 @@ END;
 $$ LANGUAGE plpgsql;
 --________________________________________________________________________________________________________________________________________
 --USERS
-DO
-$do$
-DECLARE
-  counter INT := 0;
-BEGIN 
-FOR i IN 1..2500 LOOP
-  INSERT INTO users (EMAIL, PSSWD, TIME_REG, LAST_TIME)
-  VALUES (random_email(((random() * 20 + 4):: INT))
-        , random_string(((random() * 20 + 4):: INT)) 
-        ,'2011-09-28 01:00:00'
-        ,'2012-09-28 01:00:00');
-END LOOP;
-SELECT COUNT(*) INTO counter FROM users;
-RAISE NOTICE 'users filleed ok, size: %', counter;
-END;
-$do$;
 
+INSERT INTO users (EMAIL, 
+                   PSSWD, 
+                   TIME_REG,
+                   LAST_TIME)
+   SELECT
+       random_email(((random() * 20 + 4) :: INT)),
+       random_string(((random() * 20 + 4):: INT)),
+       '2011-09-28 01:00:00' :: TIMESTAMP + random() * '365 days' :: INTERVAL,
+       '2012-09-28 01:00:00' :: TIMESTAMP + random() * '365 days' :: INTERVAL
+   FROM generate_series(1, 2500) AS t(num);
+SELECT COUNT(*) FROM users;
 --________________________________________________________________________________________________________________________________________
 --VACANCIES
-DO
-$do$
-DECLARE
-  counter INT := 0;
-BEGIN 
-FOR i IN 1..2500000 LOOP
 
-  INSERT INTO vacancies (NAME, 
-                        POSITION, 
-                        DESCRIPTION, 
-                        TIME_REG, 
-                        EXPIRIENCE,
-                        ACTIVE_DAYS,
-                        SALARY_MIN,    
-                        SALARY_MAX) 
-            VALUES (random_string(((random() * 20 + 4):: INT)),
-                    random_string(((random() * 20 + 4):: INT)),
-                    random_string(((random() * 500 + 4):: INT)),
-                    '2001-09-28 01:00:00',
-                    ((random() * 80 + 1):: INT),
-                    ((random() * 20 + 4):: INT),
-                    ((random() * 2000000 + 10000):: INT),
-                    ((random() * 2000000 + 10000):: INT));
-                         
-END LOOP;
-SELECT COUNT(*) INTO counter FROM vacancies;
-RAISE NOTICE 'vacancies filled ok, size: %', counter;
-END;
-$do$;
-
---________________________________________________________________________________________________________________________________________
+INSERT INTO vacancies (NAME       ,
+                       POSITION   ,
+                       DESCRIPTION,
+                       TIME_REG   ,
+                       TIME_END   ,
+                       EXPIRIENCE ,
+                       SALARY_MIN ,
+                       SALARY_MAX )
+   SELECT
+       random_string(((random() * 20 + 4)  :: INT)),
+       random_string(((random() * 20 + 4)  :: INT)),
+       random_string(((random() * 100 + 10):: INT)),
+       '2011-01-01 01:00:00' :: TIMESTAMP + random() * '365 days' :: INTERVAL,
+       '2012-01-01 01:00:00' :: TIMESTAMP + random() * '365 days' :: INTERVAL,
+       ((random() * 80 + 1)                :: INT),
+       ((random() * 20000   + 10000)       :: INT),
+       ((random() * 2000000 + 10000)       :: INT)
+   FROM generate_series(1, 2500000) AS t(num);
+SELECT COUNT(*) FROM vacancies;
+--_______________________________________________________________________________________________________________________________________
 --SUMMARIES
-DO
-$do$
-DECLARE
-  usrid INT;
-  usrem TEXT;
-  counter INT := 0;
-BEGIN  
-FOR i IN 1..2500000 LOOP
-usrid := ((random() * 2499 + 1):: INT);
-SELECT EMAIL INTO usrem FROM users WHERE ID=usrid;
-INSERT INTO summaries ( USR_ID,
-                        USR_EMAIL, 
-                        POSITION, 
-                        AGE,      
-                        NAME,
-                        EXPIRIENCE,
-                        SKILLS    ,
-                        SALARY_MIN,
-                        SALARY_MAX
-                        )
-            VALUES (usrid,
-                    usrem,
-                    random_string(((random() * 20 + 4):: INT)),                                         
-                    ((random() * 60 + 10):: INT),                   
-                    random_string(((random() * 20 + 4):: INT)),
-                    ((random() * 20 + 1):: INT),
-                    random_string(((random() * 10 + 4):: INT)),
-                    ((random() * 10000 + 10000):: INT),
-                    ((random() * 200000 + 20000):: INT)
-                    );
-END LOOP;
-SELECT COUNT(*) INTO counter FROM vacancies;
-RAISE NOTICE 'summaries filled ok, size: %', counter;
-END;
-$do$;
 
+INSERT INTO summaries (USR_ID    ,
+                       USR_EMAIL ,
+                       POSITION  ,
+                       AGE       ,
+                       NAME      ,
+                       EXPIRIENCE,
+                       SKILLS    ,
+                       SALARY_MIN,
+                       SALARY_MAX)
+    SELECT
+        u.USR_ID,
+        u.EMAIL,
+        random_string((random() * 20 + 4)  :: INT),
+        ((random() * 40 + 18)              :: INT),
+        (random_string(((random() * 20 + 4):: INT)), random_string(((random() * 20 + 4):: INT)), random_string(((random() * 20 + 4):: INT))) :: FULL_NAME,
+        ((random() * 40 + 1)               :: INT),
+        random_string((random() * 20 + 4)  :: INT),
+        ((random() * 20000   + 10000)      :: INT),
+        ((random() * 2000000 + 10000)      :: INT)
+    FROM users u
+        LEFT JOIN generate_series(1, 10000) AS t(num) ON (1 = round(random() * 10));
+SELECT COUNT(*) FROM summaries;
 --________________________________________________________________________________________________________________________________________
---RESPONSES
-DO
-$do$
-DECLARE
-  counter INT := 0;
-BEGIN  
-FOR i IN 1..2500000 LOOP
-INSERT INTO responses ( ID_VACANCY,
-                        ID_SUMMARY
-                        )
-            VALUES (((random() * (2500000-1) + 1):: INT),
-                    ((random() * (2500000-1) + 1):: INT)
-                    );
-END LOOP;
-SELECT COUNT(*) INTO counter FROM responses;
-RAISE NOTICE 'responses filled ok, size: %', counter;
-END;
-$do$;
-
-________________________________________________________________________________________________________________________________________
+--RESPONCIES
+INSERT INTO responses (VACANCY_ID, SUMMARY_ID)
+    SELECT
+        v.VACANCY_ID,
+        s.SUMMARY_ID
+    FROM (SELECT VACANCY_ID
+          FROM vacancies
+          ORDER BY random()
+          LIMIT 5000) AS v
+        JOIN (SELECT SUMMARY_ID
+              FROM summaries
+              ORDER BY random()
+              LIMIT 5000) AS s ON 1 = round(random() * 10);
+SELECT COUNT(*) FROM responses;
+--________________________________________________________________________________________________________________________________________
 --MESSAGES
-DO
-$do$
-DECLARE
-  counter INT := 0;
-BEGIN  
-FOR i IN 1..2500000 LOOP
+INSERT INTO messages (RESPONSE_ID,
+                      MESSAGE,    
+                      MSG_TIME)
+    SELECT
+        r.RESPONSE_ID,
+        random_string((random() * 50 + 4):: INT),
+        '2012-01-01 01:00:00' :: TIMESTAMP + random() * '365 days' :: INTERVAL
+    FROM (SELECT RESPONSE_ID
+          FROM responses) AS r LEFT JOIN generate_series(1, 20) AS t(num) ON 1 = round(random() * 5);
+SELECT COUNT(*) FROM messages;
+--________________________________________________________________________________________________________________________________________
 
-INSERT INTO messages (  ID_RESPONSE,
-                        MESSAGE,
-                        MSG_TIME
-                        )
-            VALUES (((random() * (2500000-1) + 1):: INT),
-                    random_string(((random() * 40 + 4):: INT)),   
-                    '2001-09-28 01:00:00'
-                    );
-END LOOP;
-SELECT COUNT(*) INTO counter FROM messages;
-RAISE NOTICE 'messages filled ok, size: %', counter;
-END;
-$do$;
 

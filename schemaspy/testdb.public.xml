@@ -1,79 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database name="testdb" schema="public" type="PostgreSQL - 10.1">
    <tables>
-      <table name="counter" numRows="1" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="false" digits="0" id="0" name="count" nullable="true" remarks="" size="19" type="int8"/>
-      </table>
-      <table name="messages" numRows="2500000" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="false" digits="0" id="0" name="id_response" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="1" name="message" nullable="false" remarks="" size="2147483647" type="text"/>
-         <column autoUpdated="false" digits="6" id="2" name="msg_time" nullable="false" remarks="" size="29" type="timestamp"/>
-      </table>
-      <table name="responses" numRows="2500000" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('responses_id_response_seq'::regclass)" digits="0" id="0" name="id_response" nullable="false" remarks="" size="10" type="serial"/>
-         <column autoUpdated="false" digits="0" id="1" name="id_vacancy" nullable="true" remarks="" size="10" type="int4">
-            <parent column="id" foreignKey="responses_id_vacancy_fkey" implied="false" onDeleteCascade="false" table="vacancies"/>
-         </column>
-         <column autoUpdated="false" digits="0" id="2" name="id_summary" nullable="true" remarks="" size="10" type="int4">
-            <parent column="id" foreignKey="responses_id_summary_fkey" implied="false" onDeleteCascade="false" table="summaries"/>
-         </column>
-         <primaryKey column="id_response" sequenceNumberInPK="1"/>
-         <index name="responses_pkey" unique="true">
-            <column ascending="true" name="id_response"/>
+      <table name="messages" numRows="10024699" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('messages_message_id_seq'::regclass)" digits="0" id="0" name="message_id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" digits="0" id="1" name="response_id" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="2" name="message" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="6" id="3" name="msg_time" nullable="false" remarks="" size="29" type="timestamp"/>
+         <primaryKey column="message_id" sequenceNumberInPK="1"/>
+         <index name="messages_pkey" unique="true">
+            <column ascending="true" name="message_id"/>
          </index>
       </table>
-      <table name="summaries" numRows="5000000" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('summaries_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial">
-            <child column="id_summary" foreignKey="responses_id_summary_fkey" implied="false" onDeleteCascade="false" table="responses"/>
-            <parent column="id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="users"/>
+      <table name="responses" numRows="2498862" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('responses_response_id_seq'::regclass)" digits="0" id="0" name="response_id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" digits="0" id="1" name="vacancy_id" nullable="true" remarks="" size="10" type="int4">
+            <parent column="vacancy_id" foreignKey="responses_vacancy_id_fkey" implied="false" onDeleteCascade="false" table="vacancies"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="summary_id" nullable="true" remarks="" size="10" type="int4">
+            <parent column="summary_id" foreignKey="responses_summary_id_fkey" implied="false" onDeleteCascade="false" table="summaries"/>
+         </column>
+         <primaryKey column="response_id" sequenceNumberInPK="1"/>
+         <index name="responses_pkey" unique="true">
+            <column ascending="true" name="response_id"/>
+         </index>
+      </table>
+      <table name="summaries" numRows="2501519" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('summaries_summary_id_seq'::regclass)" digits="0" id="0" name="summary_id" nullable="false" remarks="" size="10" type="serial">
+            <child column="summary_id" foreignKey="responses_summary_id_fkey" implied="false" onDeleteCascade="false" table="responses"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="usr_id" nullable="true" remarks="" size="10" type="int4">
-            <parent column="id" foreignKey="summaries_usr_id_fkey" implied="false" onDeleteCascade="false" table="users"/>
+            <parent column="usr_id" foreignKey="summaries_usr_id_fkey" implied="false" onDeleteCascade="false" table="users"/>
          </column>
          <column autoUpdated="false" digits="0" id="2" name="usr_email" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="3" name="position" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="4" name="age" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="5" name="name" nullable="false" remarks="" size="2147483647" type="text"/>
+         <column autoUpdated="false" digits="0" id="5" name="name" nullable="false" remarks="" size="2147483647" type="full_name"/>
          <column autoUpdated="false" digits="0" id="6" name="expirience" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="7" name="skills" nullable="true" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="8" name="salary_min" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="9" name="salary_max" nullable="true" remarks="" size="10" type="int4"/>
-         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <primaryKey column="summary_id" sequenceNumberInPK="1"/>
          <index name="summaries_pkey" unique="true">
-            <column ascending="true" name="id"/>
+            <column ascending="true" name="summary_id"/>
+         </index>
+         <index name="user_expirience_index" unique="false">
+            <column ascending="true" name="expirience"/>
          </index>
       </table>
       <table name="users" numRows="2500" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('users_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial">
-            <child column="id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="summaries"/>
+         <column autoUpdated="true" defaultValue="nextval('users_usr_id_seq'::regclass)" digits="0" id="0" name="usr_id" nullable="false" remarks="" size="10" type="serial">
             <child column="usr_id" foreignKey="summaries_usr_id_fkey" implied="false" onDeleteCascade="false" table="summaries"/>
-            <child column="id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="vacancies"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="email" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="2" name="psswd" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="6" id="3" name="time_reg" nullable="false" remarks="" size="29" type="timestamp"/>
          <column autoUpdated="false" digits="6" id="4" name="last_time" nullable="false" remarks="" size="29" type="timestamp"/>
-         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <primaryKey column="usr_id" sequenceNumberInPK="1"/>
          <index name="users_pkey" unique="true">
-            <column ascending="true" name="id"/>
+            <column ascending="true" name="usr_id"/>
+         </index>
+         <index name="email_index" unique="true">
+            <column ascending="true" name="email"/>
          </index>
       </table>
       <table name="vacancies" numRows="2500000" remarks="" schema="public" type="TABLE">
-         <column autoUpdated="true" defaultValue="nextval('vacancies_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial">
-            <child column="id_vacancy" foreignKey="responses_id_vacancy_fkey" implied="false" onDeleteCascade="false" table="responses"/>
-            <parent column="id" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="users"/>
+         <column autoUpdated="true" defaultValue="nextval('vacancies_vacancy_id_seq'::regclass)" digits="0" id="0" name="vacancy_id" nullable="false" remarks="" size="10" type="serial">
+            <child column="vacancy_id" foreignKey="responses_vacancy_id_fkey" implied="false" onDeleteCascade="false" table="responses"/>
          </column>
          <column autoUpdated="false" digits="0" id="1" name="name" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="2" name="position" nullable="false" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="0" id="3" name="description" nullable="true" remarks="" size="2147483647" type="text"/>
          <column autoUpdated="false" digits="6" id="4" name="time_reg" nullable="false" remarks="" size="29" type="timestamp"/>
-         <column autoUpdated="false" digits="0" id="5" name="expirience" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="6" name="active_days" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="7" name="salary_min" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="6" id="5" name="time_end" nullable="false" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="0" id="6" name="expirience" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="7" name="salary_min" nullable="true" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="8" name="salary_max" nullable="true" remarks="" size="10" type="int4"/>
-         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <primaryKey column="vacancy_id" sequenceNumberInPK="1"/>
          <index name="vacancies_pkey" unique="true">
-            <column ascending="true" name="id"/>
+            <column ascending="true" name="vacancy_id"/>
+         </index>
+         <index name="salary_index" unique="false">
+            <column ascending="true" name="salary_min"/>
+            <column ascending="true" name="salary_max"/>
          </index>
       </table>
    </tables>

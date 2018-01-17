@@ -35,7 +35,6 @@
 <table width='100%' border='0'>
 <tr valign='top'><td class='container' align='left' valign='top'>
 <form name='options' action=''>
- <label for='implied'><input type=checkbox id='implied'>Implied relationships</label>
  <label for='showRelatedCols'><input type=checkbox id='showRelatedCols'>Related columns</label>
  <label for='showConstNames'><input type=checkbox id='showConstNames'>Constraints</label>
  <label for='showComments'><input type=checkbox id='showComments'>Comments</label>
@@ -102,36 +101,27 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </tr>
 </thead>
 <tbody valign='top'>
-<tr class='odd'>
- <td class='primaryKey' title='Primary Key'>id</td>
+<tr class='even'>
+ <td class='primaryKey' title='Primary Key'>vacancy_id</td>
  <td class='detail'>serial</td>
  <td class='detail' align='right'>10</td>
  <td class='detail' align='center'></td>
  <td class='detail' align='center' title='Automatically updated by the database'>&nbsp;&radic;&nbsp;</td>
- <td class='detail' align='right'>nextval('vacancies_id_seq'::regclass)</td>
+ <td class='detail' align='right'>nextval('vacancies_vacancy_id_seq'::regclass)</td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='relative odd' valign='top'>
-    <td class='relatedTable detail' title="responses.id_vacancy refs vacancies.id via responses_id_vacancy_fkey"><a href='responses.html'>responses</a><span class='relatedKey'>.id_vacancy</span>
+   <tr class='relative even' valign='top'>
+    <td class='relatedTable detail' title="responses.vacancy_id refs vacancies.vacancy_id via responses_vacancy_id_fkey"><a href='responses.html'>responses</a><span class='relatedKey'>.vacancy_id</span>
     </td>
-    <td class='constraint detail'>responses_id_vacancy_fkey<span title='Restrict delete:
+    <td class='constraint detail'>responses_vacancy_id_fkey<span title='Restrict delete:
  Parent cannot be deleted if children exist'>&nbsp;R</span></td>
    </tr>
   </table>
 </td>
- <td class='detail'>
-  <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='impliedRelationship relative odd' valign='top'>
-    <td class='relatedTable detail' title="vacancies.id's name implies that it's a child of users.id, but it doesn't reference that column."><a href='users.html'>users</a><span class='relatedKey'>.id</span>
-    </td>
-    <td class='constraint detail'>Implied Constraint<span title='Restrict delete:
- Parent cannot be deleted if children exist'>&nbsp;R</span></td>
-   </tr>
-  </table>
- </td>
+ <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>name</td>
  <td class='detail'>text</td>
  <td class='detail' align='right'>2147483647</td>
@@ -142,7 +132,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>position</td>
  <td class='detail'>text</td>
  <td class='detail' align='right'>2147483647</td>
@@ -153,7 +143,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>description</td>
  <td class='detail'>text</td>
  <td class='detail' align='right'>2147483647</td>
@@ -164,8 +154,19 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>time_reg</td>
+ <td class='detail'>timestamp</td>
+ <td class='detail' align='right'>29,6</td>
+ <td class='detail' align='center'></td>
+ <td class='detail' align='center'></td>
+ <td class='detail'></td>
+ <td class='detail'></td>
+ <td class='detail'> </td>
+ <td class='comment detail'></td>
+</tr>
+<tr class='odd'>
+ <td class='detail'>time_end</td>
  <td class='detail'>timestamp</td>
  <td class='detail' align='right'>29,6</td>
  <td class='detail' align='center'></td>
@@ -187,29 +188,18 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='comment detail'></td>
 </tr>
 <tr class='odd'>
- <td class='detail'>active_days</td>
+ <td class='indexedColumn' title='Indexed'>salary_min</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
+ <td class='detail' align='center' title='nullable'>&nbsp;&radic;&nbsp;</td>
  <td class='detail' align='center'></td>
- <td class='detail' align='center'></td>
- <td class='detail'></td>
+ <td class='detail' align='right'>null</td>
  <td class='detail'></td>
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
 <tr class='even'>
- <td class='detail'>salary_min</td>
- <td class='detail'>int4</td>
- <td class='detail' align='right'>10</td>
- <td class='detail' align='center'></td>
- <td class='detail' align='center'></td>
- <td class='detail'></td>
- <td class='detail'></td>
- <td class='detail'> </td>
- <td class='comment detail'></td>
-</tr>
-<tr class='odd'>
- <td class='detail'>salary_max</td>
+ <td class='indexedColumn' title='Indexed'>salary_max</td>
  <td class='detail'>int4</td>
  <td class='detail' align='right'>10</td>
  <td class='detail' align='center' title='nullable'>&nbsp;&radic;&nbsp;</td>
@@ -220,7 +210,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='9 columns'>Table contained 2 500 000 rows at ?? ??? 08 01:20 MSK 2018<p/>
+<p title='9 columns'>Table contained 2 500 000 rows at ?? ??? 17 23:34 MSK 2018<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
@@ -235,10 +225,16 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </thead>
 <tbody>
  <tr>
-  <td class='primaryKey'>id</td>
+  <td class='primaryKey'>vacancy_id</td>
   <td class='detail'>Primary key</td>
   <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
   <td class='constraint' style='text-align:left;'>vacancies_pkey</td>
+ </tr>
+ <tr>
+  <td class='indexedColumn'>salary_min + salary_max</td>
+  <td class='detail'>Performance</td>
+  <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span>/<span title='Ascending'>Asc</span></td>
+  <td class='constraint' style='text-align:left;'>salary_index</td>
  </tr>
 </table>
 </div>
@@ -250,14 +246,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <area shape="rect" id="node2" href="vacancies.html" title="vacancies" alt="" coords="5,27,291,307">
 </map>
   <a name='diagram'><img id='oneDegreeImg' src='../diagrams/vacancies.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
-<map id="impliedTwoDegreesRelationshipsDiagram" name="impliedTwoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="responses.html" title="responses" alt="" coords="528,120,705,251">
-<area shape="rect" id="node2" href="summaries.html" title="summaries" alt="" coords="247,303,436,385">
-<area shape="rect" id="node3" href="vacancies.html" title="vacancies" alt="" coords="199,5,484,285">
-<area shape="rect" id="node4" href="users.html" title="users" alt="" coords="5,303,155,481">
-</map>
-
-  <a name='diagram'><img id='impliedTwoDegreesImg' src='../diagrams/vacancies.implied2degrees.png' usemap='#impliedTwoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
 <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
 <area shape="rect" id="node1" href="responses.html" title="responses" alt="" coords="335,120,512,251">
 <area shape="rect" id="node2" href="summaries.html" title="summaries" alt="" coords="53,303,243,385">

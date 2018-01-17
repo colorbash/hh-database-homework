@@ -35,7 +35,6 @@
 <table width='100%' border='0'>
 <tr valign='top'><td class='container' align='left' valign='top'>
 <form name='options' action=''>
- <label for='implied'><input type=checkbox id='implied'>Implied relationships</label>
  <label for='showRelatedCols'><input type=checkbox id='showRelatedCols'>Related columns</label>
  <label for='showConstNames'><input type=checkbox id='showConstNames'>Constraints</label>
  <label for='showComments'><input type=checkbox id='showComments'>Comments</label>
@@ -102,31 +101,19 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </tr>
 </thead>
 <tbody valign='top'>
-<tr class='even'>
- <td class='primaryKey' title='Primary Key'>id</td>
+<tr class='odd'>
+ <td class='primaryKey' title='Primary Key'>usr_id</td>
  <td class='detail'>serial</td>
  <td class='detail' align='right'>10</td>
  <td class='detail' align='center'></td>
  <td class='detail' align='center' title='Automatically updated by the database'>&nbsp;&radic;&nbsp;</td>
- <td class='detail' align='right'>nextval('users_id_seq'::regclass)</td>
+ <td class='detail' align='right'>nextval('users_usr_id_seq'::regclass)</td>
  <td class='detail'>
   <table border='0' width='100%' cellspacing='0' cellpadding='0'>
-   <tr class='impliedRelationship relative even' valign='top'>
-    <td class='relatedTable detail' title="summaries.id's name implies that it's a child of users.id, but it doesn't reference that column."><a href='summaries.html'>summaries</a><span class='relatedKey'>.id</span>
-    </td>
-    <td class='constraint detail'>Implied Constraint<span title='Restrict delete:
- Parent cannot be deleted if children exist'>&nbsp;R</span></td>
-   </tr>
-   <tr class='relative even' valign='top'>
-    <td class='relatedTable detail' title="summaries.usr_id refs users.id via summaries_usr_id_fkey"><a href='summaries.html'>summaries</a><span class='relatedKey'>.usr_id</span>
+   <tr class='relative odd' valign='top'>
+    <td class='relatedTable detail' title="summaries.usr_id refs users.usr_id via summaries_usr_id_fkey"><a href='summaries.html'>summaries</a><span class='relatedKey'>.usr_id</span>
     </td>
     <td class='constraint detail'>summaries_usr_id_fkey<span title='Restrict delete:
- Parent cannot be deleted if children exist'>&nbsp;R</span></td>
-   </tr>
-   <tr class='impliedRelationship relative even' valign='top'>
-    <td class='relatedTable detail' title="vacancies.id's name implies that it's a child of users.id, but it doesn't reference that column."><a href='vacancies.html'>vacancies</a><span class='relatedKey'>.id</span>
-    </td>
-    <td class='constraint detail'>Implied Constraint<span title='Restrict delete:
  Parent cannot be deleted if children exist'>&nbsp;R</span></td>
    </tr>
   </table>
@@ -134,8 +121,8 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
- <td class='detail'>email</td>
+<tr class='even'>
+ <td class='indexedColumn' title='Indexed'>email</td>
  <td class='detail'>text</td>
  <td class='detail' align='right'>2147483647</td>
  <td class='detail' align='center'></td>
@@ -145,7 +132,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>psswd</td>
  <td class='detail'>text</td>
  <td class='detail' align='right'>2147483647</td>
@@ -156,7 +143,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='odd'>
+<tr class='even'>
  <td class='detail'>time_reg</td>
  <td class='detail'>timestamp</td>
  <td class='detail' align='right'>29,6</td>
@@ -167,7 +154,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='detail'> </td>
  <td class='comment detail'></td>
 </tr>
-<tr class='even'>
+<tr class='odd'>
  <td class='detail'>last_time</td>
  <td class='detail'>timestamp</td>
  <td class='detail' align='right'>29,6</td>
@@ -179,7 +166,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
  <td class='comment detail'></td>
 </tr>
 </table>
-<p title='5 columns'>Table contained 2 500 rows at ?? ??? 08 01:20 MSK 2018<p/>
+<p title='5 columns'>Table contained 2 500 rows at ?? ??? 17 23:34 MSK 2018<p/>
 </td></tr></table>
 <div class='indent'>
 <b>Indexes:</b>
@@ -194,10 +181,16 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </thead>
 <tbody>
  <tr>
-  <td class='primaryKey'>id</td>
+  <td class='primaryKey'>usr_id</td>
   <td class='detail'>Primary key</td>
   <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
   <td class='constraint' style='text-align:left;'>users_pkey</td>
+ </tr>
+ <tr>
+  <td class='indexedColumn'>email</td>
+  <td class='detail'>Must be unique</td>
+  <td class='detail' style='text-align:left;'><span title='Ascending'>Asc</span></td>
+  <td class='constraint' style='text-align:left;'>email_index</td>
  </tr>
 </table>
 </div>
@@ -209,14 +202,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <area shape="rect" id="node2" href="users.html" title="users" alt="" coords="5,27,263,211">
 </map>
   <a name='diagram'><img id='oneDegreeImg' src='../diagrams/users.1degree.png' usemap='#oneDegreeRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
-<map id="impliedTwoDegreesRelationshipsDiagram" name="impliedTwoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="responses.html" title="responses" alt="" coords="540,164,717,247">
-<area shape="rect" id="node2" href="summaries.html" title="summaries" alt="" coords="307,5,496,304">
-<area shape="rect" id="node3" href="vacancies.html" title="vacancies" alt="" coords="307,321,496,596">
-<area shape="rect" id="node4" href="users.html" title="users" alt="" coords="5,27,263,211">
-</map>
-
-  <a name='diagram'><img id='impliedTwoDegreesImg' src='../diagrams/users.implied2degrees.png' usemap='#impliedTwoDegreesRelationshipsDiagram' class='diagram' border='0' alt='' align='left'></a>
 <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
 <area shape="rect" id="node1" href="responses.html" title="responses" alt="" coords="540,5,717,88">
 <area shape="rect" id="node2" href="summaries.html" title="summaries" alt="" coords="307,5,496,304">

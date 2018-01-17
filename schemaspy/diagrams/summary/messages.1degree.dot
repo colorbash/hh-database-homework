@@ -21,10 +21,11 @@ digraph "messages" {
     label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">messages</TD></TR>
-      <TR><TD PORT="id_response" COLSPAN="3" ALIGN="LEFT">id_response</TD></TR>
+      <TR><TD PORT="message_id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">message_id</TD></TR>
+      <TR><TD PORT="response_id" COLSPAN="3" ALIGN="LEFT">response_id</TD></TR>
       <TR><TD PORT="message" COLSPAN="3" ALIGN="LEFT">message</TD></TR>
       <TR><TD PORT="msg_time" COLSPAN="3" ALIGN="LEFT">msg_time</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">2 500 000 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">10 024 699 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
     URL="tables/messages.html"
     tooltip="messages"
